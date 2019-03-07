@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/mvc">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png">
+    <link rel="stylesheet" href="chatStyle.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="chatHandler.js"></script>
+
+</head>
+<header>
+    <div class="YU-Logo">
+        <img src="https://jfe-cdn.qualtrics.com/themes/skins/schulich/schulich2/version-1538674037338-2d9fc3/files/logo.png">
+    </div>
+</header>
+<body onLoad="onStart()">
+<div class="chatbox">
+    <div class="chatlogs" id="log">
+
+
+        <div class="chat">
+            <!--   <p class="chat-message" id="log">
+
+               </p> -->
+        </div>
+
+       <!-- <span class="chat user" id="user">
+
+        </span> -->
+
+    </div>
+
+    <div class="chatform">
+        <input id="inputBox" onkeypress="enterPress(event, this)" maxlength="150">
+        <button onClick="submit()">send</button>
+    </div>
+</div>
+
+</body>
+</html>
