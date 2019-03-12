@@ -1,3 +1,5 @@
+
+
 body{
     background: #fff url(https://jfe-cdn.qualtrics.com/themes/skins/schulich/schulich2/version-1538674037338-2d9fc3/files/bg.jpg) no-repeat center fixed;
     background-size: cover;
@@ -6,16 +8,10 @@ body{
 
 .main{
     margin: auto;
-    width: 50%;
-    border: 1px solid black;
+    width: 75%;
     background-color:  #eeeeee05;
     padding-top: 16px;
     padding-right: 30px;
     padding-bottom: 16px;
     padding-left: 80px;
-}
-
-.YU-logo{
-    width: 250px;
-    height: auto;
 }
