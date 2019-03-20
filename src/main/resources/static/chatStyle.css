@@ -60,36 +60,6 @@ body {
     font-size: 18px;
 }
 
-.chat-typing {
-    position: relative;
-    background: #00aabb;
-    border-radius: .4em;
-
-    display: inline-block;
-    padding: 15px;
-    margin: 5px 7px 0;
-    color: #fff;
-    font-size: 18px;
-    float: right;
-    clear: left;
-}
-
-.chat-typing:after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top: 50%;
-    width: 0;
-    height: 0;
-    border: 10px solid transparent;
-    border-left-color: #1ddced;
-    border-right: 0;
-    margin-top: 0px;
-    margin-right: -5px;
-
-}
-
-
 .chat-message {
     position: relative;
     background: #00aabb;
@@ -191,7 +161,7 @@ body {
 }
 
 
-/* Animation */
+/* Animation for chat bubble entry */
 
 @keyframes fadeInLeft {
     from {
@@ -211,6 +181,28 @@ body {
 
     to {
         transform: translate3d(0, 0, 0);
+        opacity: 1
+    }
+}
+
+@keyframes fadeOutLeft {
+    from {
+        transform: translate3d(0, 0, 0)
+    }
+
+    to {
+        transform: translate3d(-100px, 0, 0);
+        opacity: 1
+    }
+}
+
+@-webkit-keyframes fadeOutLeft {
+    from {
+        transform: translate3d(0, 0, 0)
+    }
+
+    to {
+        transform: translate3d(-100px, 0, 0);
         opacity: 1
     }
 }
@@ -272,5 +264,79 @@ body {
     -webkit-animation-name: fadeInRight;
 }
 
+.container .dot {
+    background-color: #fff;
+}
 
+.dot {
+    -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+    border-radius: 2px;
+    display: inline-block;
+    height: 4px;
+    margin-right: 2px;
+    width: 4px;
+}
+/* typing dots transitions*/
+@-webkit-keyframes mercuryTypingAnimation{
+    0%{
+        -webkit-transform:translateY(0px)
+    }
+    28%{
+        -webkit-transform:translateY(-5px)
+    }
+    44%{
+        -webkit-transform:translateY(0px)
+    }
+}
 
+.dot:nth-child(1){
+    -webkit-animation-delay:200ms;
+}
+.dot:nth-child(2){
+    -webkit-animation-delay:300ms;
+}
+.dot:nth-child(3){
+    -webkit-animation-delay:400ms;
+}
+
+.block {
+    background-color: #00aabb;
+    display: flex;
+    height: 17px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    will-change: transform;
+    border-radius: .4em;
+    padding: 15px;
+    margin: 0 auto;
+    animation: 2s bulge infinite ease-out;
+}
+
+.block:before{
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: -2px;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: #00aabb;
+}
+
+.block:after{
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    background-color: #00aabb;
+    height: 7px;
+    width: 7px;
+    left: -7px;
+    bottom: -7px;
+}
+
+@keyframes bulge {
+    50% {
+        transform: scale(1.05);
+    }
+}

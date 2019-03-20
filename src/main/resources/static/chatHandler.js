@@ -39,20 +39,27 @@ function submit() {
 
     scrollBottom();
 
-    //Jquery call to the watson API
-    $.ajax({
-        type: "POST",
-        url: "/api/chat",
-        data: {msg: tmp},
-        success: onSuccess,
-        dataType: "json"
-    });
+    //Jquery call to the watson API with a slight delay
+    setTimeout(function() {
+        $.ajax({
+            type: "POST",
+            url: "/api/chat",
+            data: {msg: tmp},
+            success: onSuccess,
+            dataType: "json"
+        });
+    },2000);
+
 
 }
 
 //this runs after the /api/chat is successful and returns the bots answer
 function onSuccess(tmp) {
     console.log(tmp);
+
+    //this is for the typing dots
+    var dot = document.getElementById("log").appendChild(waitingDots());
+
     var node = document.createElement("div");
     var textNode = document.createTextNode(tmp.output.text);
     node.appendChild(textNode);
@@ -61,26 +68,29 @@ function onSuccess(tmp) {
     if (textNode.length > 10) {
         setTimeout(function () {
             document.getElementById("log").appendChild(node);
+            dot.remove();
             scrollBottom();
-        }, 3000);
+        }, 5000);
     } else {
         setTimeout(function () {
             document.getElementById("log").appendChild(node);
+            dot.remove();
             scrollBottom();
-        }, 1000);
+        }, 2000);
     }
 }
 
 //After connecting function is finished, this is executed to display "hello" in the chatlog div
 function onStart() {
+    var dot = document.getElementById("log").appendChild(waitingDots());
     setTimeout(function () {
         var node = document.createElement("div");
         var textNode = document.createTextNode("Hello");
         node.appendChild(textNode);
         node.className = "chat-message";
         document.getElementById("log").appendChild(node);
-        //    globVal++;
-    }, 3000);
+        dot.remove();
+    }, 2000);
     maxLength(document.getElementById("inputBox"));
 }
 
@@ -101,19 +111,30 @@ function maxLength(el) {
         };
     }
 }
-//clear interval could work in anyother function.... just need to put clearn interval
+//typing dots
 function waitingDots(){
-    var dots = window.setInterval( function() {
-        var wait = document.getElementById("dots");
-        if ( wait.innerHTML.length > 3 )
-            wait.innerHTML = "";
-        else
-            wait.innerHTML += ".";
-    }, 1000);
 
+    var pNode = document.createElement("div");
+    pNode.className = "container";
+    var node1 = document.createElement("div");
+    node1.className = "block";
+    var node2 = document.createElement("div");
+    node2.className = "dot";
+    var node3 = document.createElement("div");
+    node3.className = "dot";
+    var node4 = document.createElement("div");
+    node4.className = "dot";
+
+    node1.appendChild(node2);
+    node1.appendChild(node3);
+    node1.appendChild(node4);
+
+    pNode.appendChild(node1);
+
+   return pNode;
 }
-
 
 function scrollBottom() {
     document.querySelector('#log').scrollTop = document.querySelector('#log').scrollHeight;
 }
+
