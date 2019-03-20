@@ -269,7 +269,7 @@ body {
 }
 
 .dot {
-    -webkit-animation: mercuryTypingAnimation 1.5s infinite ease-in-out;
+    -webkit-animation: typingAnim 1.5s infinite ease-in-out;
     border-radius: 2px;
     display: inline-block;
     height: 4px;
@@ -277,7 +277,7 @@ body {
     width: 4px;
 }
 /* typing dots transitions*/
-@-webkit-keyframes mercuryTypingAnimation{
+@-webkit-keyframes typingAnim{
     0%{
         -webkit-transform:translateY(0px)
     }
