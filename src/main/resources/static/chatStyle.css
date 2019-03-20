@@ -70,8 +70,8 @@ body {
     margin: 5px 7px 0;
     color: #fff;
     font-size: 18px;
-    float: left;
-    clear: right;
+    float: right;
+    clear: left;
 }
 
 .chat-typing:after {
@@ -101,7 +101,7 @@ body {
     color: #fff;
     font-size: 18px;
     float: left;
-    clear: right;
+    clear: both;
 }
 
 .chat-message:after {
@@ -130,7 +130,7 @@ body {
     background: #1ddced;
     font-size: 18px;
     float: right;
-    clear: left;
+    clear: both;
     word-wrap: break-word;
     max-width: calc(100% - 45px);
 }
