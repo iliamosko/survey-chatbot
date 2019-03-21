@@ -58,7 +58,12 @@ function onSuccess(tmp) {
     console.log(tmp);
 
     //this is for the typing dots
-    var dot = document.getElementById("log").appendChild(waitingDots());
+    if(!document.getElementsByClassName("container")[0]) {
+        console.log("If works");
+        var dot = document.getElementById("log").appendChild(waitingDots());
+        scrollBottom();
+    }
+    console.log("if doesnt work");
 
     var node = document.createElement("div");
     var textNode = document.createTextNode(tmp.output.text);

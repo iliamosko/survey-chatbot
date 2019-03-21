@@ -303,9 +303,10 @@ body {
     background-color: #00aabb;
     display: flex;
     height: 17px;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
+    position: relative;
+
+    float: left;
+    clear: both;
     will-change: transform;
     border-radius: .4em;
     padding: 15px;
