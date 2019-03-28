@@ -1,7 +1,12 @@
+
+// global variables to keep track of how many messages are sent
+var calls = 0;
+var word = [];
+
+
 //Connecting function, waits for a "connect" then continues with code
 function connecting() {
-   // waitingDots();
-    var str = "<b>Please wait, You will be connected Shortly</b>";
+    var str = "<b>Please wait, You will be connected </b>";
     document.getElementById("inputBox").disabled = true;
     document.getElementById("inputBox")
         .placeholder = " ";
@@ -21,7 +26,8 @@ function submit() {
     var tmp;
     var element = document.getElementById("inputBox");
 
-    console.log(element);
+    calls++;
+
     if (element != null) {
         tmp = element.value;
     } else {
@@ -33,56 +39,59 @@ function submit() {
     node.appendChild(textNode);
     node.className = "chat-messageU";
     document.getElementById("log").appendChild(node);
-
-    console.log(tmp);
     document.getElementById("inputBox").value = "";
 
     scrollBottom();
 
-    //Jquery call to the watson API with a slight delay
-    setTimeout(function() {
-        $.ajax({
-            type: "POST",
-            url: "/api/chat",
-            data: {msg: tmp},
-            success: onSuccess,
-            dataType: "json"
-        });
-    },2000);
+    word += tmp + " ";
 
+    //checks if called more than once to accept multiple messages into API call
+    if(calls > 1){
+        clearInterval(send);
+        watsonCall(word);
+    } else {
+
+        watsonCall(tmp);
+    }
 
 }
 
+function watsonCall(msg) {
+    send = setTimeout(function() {
+        $.ajax({
+            type: "POST",
+            url: "/api/chat",
+            data: {msg: msg},
+            success: onSuccess,
+            dataType: "json"
+        });
+        calls=0;
+        word = [];
+    },2000);
+}
+
+
 //this runs after the /api/chat is successful and returns the bots answer
 function onSuccess(tmp) {
-    console.log(tmp);
 
     //this is for the typing dots
     if(!document.getElementsByClassName("container")[0]) {
-        console.log("If works");
         var dot = document.getElementById("log").appendChild(waitingDots());
         scrollBottom();
     }
-    console.log("if doesnt work");
 
     var node = document.createElement("div");
     var textNode = document.createTextNode(tmp.output.text);
     node.appendChild(textNode);
     node.className = "chat-message";
 
-    if (textNode.length > 10) {
-        setTimeout(function () {
-            document.getElementById("log").appendChild(node);
-            dot.remove();
-            scrollBottom();
-        }, 5000);
-    } else {
-        setTimeout(function () {
-            document.getElementById("log").appendChild(node);
-            dot.remove();
-            scrollBottom();
-        }, 2000);
-    }
+    //wait delay is set depending on how long the bots message is.
+    setTimeout(function () {
+        document.getElementById("log").appendChild(node);
+        dot.remove();
+        scrollBottom();
+    }, textNode.length*100);
+
 }
 
 //After connecting function is finished, this is executed to display "hello" in the chatlog div
@@ -105,6 +114,7 @@ function enterPress(e, textarea) {
     if (code == 13) { //Enter keycode
         submit();
     }
+
 }
 
 //sets the max length of the textarea
@@ -136,7 +146,7 @@ function waitingDots(){
 
     pNode.appendChild(node1);
 
-   return pNode;
+    return pNode;
 }
 
 function scrollBottom() {
