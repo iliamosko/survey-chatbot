@@ -6,6 +6,8 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.Context;
 import com.ibm.watson.developer_cloud.assistant.v1.model.InputData;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
+import com.ilia.bot.chatBot.services.GoogleSheetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +18,9 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class APIController {
+    @Autowired
+    private GoogleSheetService sheets;
+
     @Value("${ibm.assistant.apiKey}")
     private String assistantApiKey;
 
@@ -38,7 +43,6 @@ public class APIController {
 
     @PostMapping("/api/chat")
     public MessageResponse chat(@RequestBody String msg, HttpSession session){
-
         try {
             // first message
             MessageOptions newMessageOptions = new MessageOptions.Builder()
@@ -48,8 +52,9 @@ public class APIController {
                     .build();
 
             MessageResponse response = service.message(newMessageOptions).execute();
-           // context = response.getContext();
+            sheets.addToSpread(response.getContext().getConversationId(),msg);
             session.setAttribute("context",response.getContext());
+            sheets.addToSpread(response.getContext().getConversationId(),response.getOutput().getText().toString());
             return response;
         } catch (Exception e){
             System.out.println(e);
