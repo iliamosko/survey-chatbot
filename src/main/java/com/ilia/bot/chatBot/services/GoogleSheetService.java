@@ -38,6 +38,5 @@ public class GoogleSheetService {
         AppendValuesResponse result = googleSheet.spreadsheets().values().append(spreadSheetId,"Sheet1", body)
                 .setValueInputOption("RAW")
                 .execute();
-        System.out.println(result);
     }
 }

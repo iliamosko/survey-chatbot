@@ -11,6 +11,46 @@ body {
 
 }
 
+p.convo-sent{
+    padding: 10px;
+}
+
+
+.idbutton{
+    margin-left: 30%;
+
+}
+.idbutton {
+    display: inline-block;
+    border: none;
+    padding: 1rem 2rem;
+    margin: 0;
+    text-decoration: none;
+    background: #0069ed;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    transition: background 250ms ease-in-out,
+    transform 150ms ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.idbutton:hover,
+.idbutton:focus {
+    background: #0053ba;
+}
+.idbutton:disabled {
+    background: #333333;
+    cursor: no-drop;
+}
+
+.idbutton:active {
+    transform: scale(0.99);
+}
+
 .chatbox {
     width: 500px;
     min-width: 390px;
@@ -341,3 +381,4 @@ body {
         transform: scale(1.05);
     }
 }
+

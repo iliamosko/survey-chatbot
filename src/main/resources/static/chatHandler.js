@@ -2,6 +2,7 @@
 // global variables to keep track of how many messages are sent
 var calls = 0;
 var word = [];
+var cid;
 
 
 //Connecting function, waits for a "connect" then continues with code
@@ -80,6 +81,11 @@ function onSuccess(tmp) {
         scrollBottom();
     }
 
+    if(cid == null) {
+        cid = tmp.context.conversation_id;
+        document.getElementsByClassName("idbutton")[0].removeAttribute("disabled");
+    }
+
     var node = document.createElement("div");
     var textNode = document.createTextNode(tmp.output.text);
     node.appendChild(textNode);
@@ -153,3 +159,9 @@ function scrollBottom() {
     document.querySelector('#log').scrollTop = document.querySelector('#log').scrollHeight;
 }
 
+function convoId(){
+    if(cid != null){
+        cid = cid.substring(0,8);
+        alert("This is your convo Id:\n" + cid + "\nPlease enter this onto Qualtrics");
+    }
+}
