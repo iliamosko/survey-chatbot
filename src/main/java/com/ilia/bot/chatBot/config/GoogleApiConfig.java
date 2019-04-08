@@ -30,7 +30,7 @@ public class GoogleApiConfig {
     }
 
     public GoogleCredential googleCredential() throws IOException {
-        File serviceAccount = new ClassPathResource("adminChatBotCred.json").getFile();
+        File serviceAccount = new ClassPathResource("credentials/adminChatBotCred.json").getFile();
         return GoogleCredential.fromStream(new FileInputStream(serviceAccount))
                 .createScoped(googleOAuth2Scopes());
     }
