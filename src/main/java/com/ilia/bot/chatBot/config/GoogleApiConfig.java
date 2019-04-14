@@ -7,6 +7,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.HashSet;
@@ -30,8 +31,8 @@ public class GoogleApiConfig {
     }
 
     public GoogleCredential googleCredential() throws IOException {
-        File serviceAccount = new ClassPathResource("credentials/adminChatBotCred.json").getFile();
-        return GoogleCredential.fromStream(new FileInputStream(serviceAccount))
+        InputStream serviceAccount = new ClassPathResource("credentials/adminChatBotCred.json").getInputStream();
+        return GoogleCredential.fromStream(serviceAccount)
                 .createScoped(googleOAuth2Scopes());
     }
 

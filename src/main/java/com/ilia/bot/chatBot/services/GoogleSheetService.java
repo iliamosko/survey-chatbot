@@ -30,7 +30,7 @@ public class GoogleSheetService {
 
     public void addToSpread(String convoId, String s) throws Exception{
         List<List<Object>> values = Arrays.asList(
-                Arrays.asList(new String[] {convoId, Long.toString(System.currentTimeMillis()),s})
+                Arrays.asList(new String[] {convoId.substring(0,8), Long.toString(System.currentTimeMillis()),s})
                 // Additional rows ...
         );
 

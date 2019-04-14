@@ -43,7 +43,7 @@ p.convo-sent{
     background: #0053ba;
 }
 .idbutton:disabled {
-    background: #333333;
+    background: gray;
     cursor: no-drop;
 }
 

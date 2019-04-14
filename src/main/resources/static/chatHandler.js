@@ -7,7 +7,7 @@ var cid;
 
 //Connecting function, waits for a "connect" then continues with code
 function connecting() {
-    var str = "<b>Please wait, You will be connected </b>";
+    var str = "<b>Please wait for your partner to connect</b>";
     document.getElementById("inputBox").disabled = true;
     document.getElementById("inputBox")
         .placeholder = " ";
@@ -90,6 +90,13 @@ function onSuccess(tmp) {
     var textNode = document.createTextNode(tmp.output.text);
     node.appendChild(textNode);
     node.className = "chat-message";
+
+    //case for the last message to block the chat box from additional messages
+    if(tmp.output.text[0].includes("Please click the button below to get your conversation id")){
+        document.getElementById("inputBox").disabled = true;
+        document.getElementById("inputBox")
+            .placeholder = "Conversation has ended by user";
+    }
 
     //wait delay is set depending on how long the bots message is.
     setTimeout(function () {
