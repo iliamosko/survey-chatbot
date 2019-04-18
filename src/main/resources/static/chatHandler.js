@@ -46,6 +46,7 @@ function submit() {
 
     word += tmp + " ";
 
+
     //checks if called more than once to accept multiple messages into API call
     if(calls > 1){
         clearInterval(send);
@@ -68,7 +69,7 @@ function watsonCall(msg) {
         });
         calls=0;
         word = [];
-    },2000);
+    },5000);
 }
 
 
@@ -77,6 +78,7 @@ function onSuccess(tmp) {
 
     //this is for the typing dots
     if(!document.getElementsByClassName("container")[0]) {
+
         var dot = document.getElementById("log").appendChild(waitingDots());
         scrollBottom();
     }
@@ -85,6 +87,7 @@ function onSuccess(tmp) {
         cid = tmp.context.conversation_id;
         document.getElementsByClassName("idbutton")[0].removeAttribute("disabled");
     }
+
 
     var node = document.createElement("div");
     var textNode = document.createTextNode(tmp.output.text);
@@ -95,7 +98,7 @@ function onSuccess(tmp) {
     if(tmp.output.text[0].includes("Please click the button below to get your conversation id")){
         document.getElementById("inputBox").disabled = true;
         document.getElementById("inputBox")
-            .placeholder = "Conversation has ended by user";
+            .placeholder = "Conversation has been ended by the user";
     }
 
     //wait delay is set depending on how long the bots message is.
