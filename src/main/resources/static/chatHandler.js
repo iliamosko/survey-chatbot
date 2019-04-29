@@ -95,7 +95,7 @@ function onSuccess(tmp) {
     node.className = "chat-message";
 
     //case for the last message to block the chat box from additional messages
-    if(tmp.output.text[0].includes("Please click the button below to get your conversation id")){
+    if(tmp.output.text[0].includes("Alright, It was nice working with you!")){
         document.getElementById("inputBox").disabled = true;
         document.getElementById("inputBox")
             .placeholder = "Conversation has been ended by the user";
