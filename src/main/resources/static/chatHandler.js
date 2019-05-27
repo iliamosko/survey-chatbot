@@ -1,9 +1,9 @@
-
 // global variables to keep track of how many messages are sent
 var calls = 0;
 var word = [];
 var cid;
-
+var stutterSpeed = 1;
+var totalStutter = 0;
 
 //Connecting function, waits for a "connect" then continues with code
 function connecting() {
@@ -75,12 +75,42 @@ function watsonCall(msg) {
 
 //this runs after the /api/chat is successful and returns the bots answer
 function onSuccess(tmp) {
+    var rand = Math.floor((Math.random() * 10) + 1);
+
+    var node = document.createElement("div");
+    var textNode = document.createTextNode(tmp.output.text);
+    node.appendChild(textNode);
+    node.className = "chat-message";
 
     //this is for the typing dots
     if(!document.getElementsByClassName("container")[0]) {
-
         var dot = document.getElementById("log").appendChild(waitingDots());
         scrollBottom();
+
+    }
+
+    //randomly stutters the typing dots depending on the random number for a maximum of 3 stutters in total
+    if(rand > 7 && totalStutter!=3){
+        document.getElementsByClassName("container")[0].style.visibility = "hidden";
+        var dot1 =  document.getElementById("log").appendChild(waitingDots());
+        scrollBottom();
+
+        setTimeout(function () {
+            dot1.remove()
+        },2000);
+
+        setTimeout(function () {
+            document.getElementsByClassName("container")[0].style.visibility = "visible ";
+            scrollBottom();
+        }, 5000);
+
+        if(textNode.length < 100 ){
+            stutterSpeed = 2;
+        } else {
+            stutterSpeed = 1.355;
+        }
+        totalStutter++;
+
     }
 
     if(cid == null) {
@@ -88,26 +118,26 @@ function onSuccess(tmp) {
         document.getElementsByClassName("idbutton")[0].removeAttribute("disabled");
     }
 
-
-    var node = document.createElement("div");
-    var textNode = document.createTextNode(tmp.output.text);
-    node.appendChild(textNode);
-    node.className = "chat-message";
-
     //case for the last message to block the chat box from additional messages
-    if(tmp.output.text[0].includes("Alright, It was nice working with you!")){
-        document.getElementById("inputBox").disabled = true;
-        document.getElementById("inputBox")
-            .placeholder = "Conversation has been ended by the user";
+    if(tmp.output.text[0].includes("Alright, It was nice working with you! goodluck on the rest with the survey. im going to leave the convo now")){
+        setTimeout(function () {
+            document.getElementById("inputBox").disabled = true;
+            document.getElementById("inputBox")
+                .placeholder = "User has left the conversation";
+        },textNode.length*100*stutterSpeed + 3000);
+
     }
+
 
     //wait delay is set depending on how long the bots message is.
     setTimeout(function () {
+
         document.getElementById("log").appendChild(node);
         dot.remove();
         scrollBottom();
-    }, textNode.length*100);
+    }, textNode.length*100*stutterSpeed);
 
+    stutterSpeed = 1;
 }
 
 //After connecting function is finished, this is executed to display "hello" in the chatlog div
@@ -170,8 +200,24 @@ function scrollBottom() {
 }
 
 function convoId(){
+
     if(cid != null){
         cid = cid.substring(0,8);
-        alert("This is your convo Id:\n" + cid + "\nPlease enter this onto Qualtrics");
     }
+
+    var elem = document.getElementsByClassName("idbutton")[0];
+    elem.parentNode.removeChild(elem);
+
+    var place = document.getElementsByClassName("convoid")[0];
+
+    var node = document.createElement("p");
+    var textNode = document.createTextNode("This is your conversation Id: " + cid);
+    node.appendChild(textNode);
+
+    node.setAttribute("style", "font-weight: bold");
+
+
+    place.appendChild(node);
+
+
 }
