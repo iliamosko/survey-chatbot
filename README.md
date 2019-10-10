@@ -6,6 +6,8 @@ This is a chat bot that utilizes IBM Watson AI capabilities to chat and collaber
 that is related to the survey and the bot will respond accordingly. At the end of a conversation, the bot will block further user input. 
 All conversations are saved on Google Sheets spreadsheet with the corresponding chat id and messages. 
 
+Website: [qualchat.live](https://qualchat.live/)
+
 
 ### Images
 
